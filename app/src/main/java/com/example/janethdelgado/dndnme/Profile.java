@@ -9,22 +9,30 @@ import com.parse.ParseUser;
 public class Profile extends ParseObject {
     // Ensure that your subclass has a public default constructor
 
-    public static final String KEY_PROFILE_IMAGE = "profileImage";
-    public static final String KEY_BIO = "bio";
+    public static final String KEY_IMAGE = "profileImage";
+    public static final String KEY_SHORT_BIO = "shortBio";
+    public static final String KEY_LONG_BIO = "longBio";
     public static final String KEY_USER = "user";
 
     public ParseFile getProfileImage() {
-        return getParseFile(KEY_PROFILE_IMAGE);
+        return getParseFile(KEY_IMAGE);
     }
     public void setProfileImage(ParseFile parseFile) {
-        put(KEY_PROFILE_IMAGE, parseFile);
+        put(KEY_IMAGE, parseFile);
     }
 
-    public String getBio() {
-        return getString(KEY_BIO);
+    public String getShortBio() {
+        return getString(KEY_SHORT_BIO);
     }
-    public void setBio(String newBio) {
-        put(KEY_BIO, newBio);
+    public void setShortBio(String newBio) {
+        put(KEY_SHORT_BIO, newBio);
+    }
+
+    public String getLongBio() {
+        return getString(KEY_LONG_BIO);
+    }
+    public void setLongBio(String newBio) {
+        put(KEY_LONG_BIO, newBio);
     }
 
     public ParseUser getUser() {

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".QuestionsActivity">
+
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="30dp"
+        android:background="#C0C0C0"
+        android:padding="30dp"
+        android:text="This is an example for the questions screen"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <RadioGroup
+        android:id="@+id/rgButtons"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvQuestion">
+
+        <RadioButton
+            android:id="@+id/rBtn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="20dp"
+            android:text="1"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/rBtn2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textSize="20sp"/>
+
+        <RadioButton
+            android:id="@+id/rBtn3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:checked="true"
+            android:textSize="20sp"/>
+
+        <RadioButton
+            android:id="@+id/rBtn4"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:textSize="20sp"/>
+
+        <RadioButton
+            android:id="@+id/rBtn5"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="20sp"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgButtons"
+        android:layout_centerHorizontal="true"
+        android:text="Submit"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/menu_bottom_navigation" />
+</RelativeLayout>

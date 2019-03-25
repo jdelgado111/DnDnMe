@@ -1,10 +1,15 @@
 package com.example.janethdelgado.dndnme;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -26,6 +31,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private Profile userProfile;
 
+    private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,38 @@ public class ProfileActivity extends AppCompatActivity {
         //get Profile data from server
         //and fill in profile view
         fillProfile(user);
+
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_profile:
+                        Toast.makeText(ProfileActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.action_matches:
+                        //Toast.makeText(ProfileActivity.this, "Matches", Toast.LENGTH_SHORT).show();
+                        Intent a = new Intent(ProfileActivity.this, MatchesActivity.class);
+                        startActivity(a);
+                        break;
+                    case R.id.action_question:
+                        //Toast.makeText(ProfileActivity.this, "Questions", Toast.LENGTH_SHORT).show();
+                        Intent b = new Intent(ProfileActivity.this, QuestionsActivity.class);
+                        startActivity(b);
+                        break;
+                    case R.id.action_logout:
+                        //Toast.makeText(ProfileActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                        Intent c = new Intent(ProfileActivity.this, LogoutActivity.class);
+                        startActivity(c);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        // Set default selection
+        bottomNavigationView.setSelectedItemId(R.id.action_profile);
     }
 
     private void fillProfile(final ParseUser user) {

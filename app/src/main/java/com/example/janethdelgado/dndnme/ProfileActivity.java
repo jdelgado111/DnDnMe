@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -57,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_profile:
-                        Toast.makeText(ProfileActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ProfileActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_matches:
                         //Toast.makeText(ProfileActivity.this, "Matches", Toast.LENGTH_SHORT).show();
@@ -75,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                         startActivity(c);
                         break;
                 }
-                return false;
+                return true;
             }
         });
 
@@ -109,9 +108,20 @@ public class ProfileActivity extends AppCompatActivity {
                     Glide.with(ProfileActivity.this).load(image.getUrl()).into(ivProfileImage);
                 }
 
-                tvUsername.setText(username);
-                tvShortBio.setText(shortBio);
-                tvLongBio.setText(longBio);
+                if (username != null && !(username.equals("")))
+                    tvUsername.setText("@" + username);
+                else
+                    tvUsername.setText("@Default");
+
+                if (shortBio != null && !(shortBio.equals("")))
+                    tvShortBio.setText(shortBio);
+                else
+                    tvShortBio.setText("This is the default text for the short bio.");
+
+                if (longBio != null && !(longBio.equals("")))
+                    tvLongBio.setText(longBio);
+                else
+                    tvLongBio.setText("This is the default text for the long bio.");
             }
         });
     }

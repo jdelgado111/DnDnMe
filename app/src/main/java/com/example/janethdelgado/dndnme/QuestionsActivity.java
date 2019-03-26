@@ -44,12 +44,12 @@ public class QuestionsActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.action_matches:
-                        Toast.makeText(QuestionsActivity.this, "Matches", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(QuestionsActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         Intent b = new Intent(QuestionsActivity.this, MatchesActivity.class);
                         startActivity(b);
                         break;
                     case R.id.action_question:
-                        Toast.makeText(QuestionsActivity.this, "Questions", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(QuestionsActivity.this, "Questions", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_logout:
                         //Toast.makeText(QuestionsActivity.this, "Logout", Toast.LENGTH_SHORT).show();
@@ -57,7 +57,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         startActivity(c);
                         break;
                 }
-                return false;
+                return true;
             }
         });
 

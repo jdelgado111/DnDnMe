@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 public class SignupActivity extends AppCompatActivity {
@@ -44,12 +45,12 @@ public class SignupActivity extends AppCompatActivity {
 
     private void signUp(String username, String password, String email) {
         // Create the ParseUser
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
 
         // Set core properties
-        user.setUsername(etUsername.getText().toString());
-        user.setPassword(etPassword.getText().toString());
-        user.setEmail(etEmail.getText().toString());
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
 
         user.signUpInBackground(new SignUpCallback() {
             @Override
@@ -60,8 +61,32 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
+                //create default Profile for new User
+                createProfile(user);
+
                 // navigate to new activity if the user has signed up properly
                 goMainActivity();
+            }
+        });
+    }
+
+    private void createProfile(ParseUser parseUser){
+        Profile profile = new Profile();
+
+        profile.setShortBio("");
+        profile.setLongBio("");
+        profile.setUser(parseUser);
+
+        profile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving");
+                    e.printStackTrace();
+                    return;
+                }
+
+                Log.d(TAG, "Success!");
             }
         });
     }

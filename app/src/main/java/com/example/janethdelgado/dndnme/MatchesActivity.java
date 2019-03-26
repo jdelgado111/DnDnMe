@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -63,7 +62,7 @@ public class MatchesActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.action_matches:
-                        Toast.makeText(MatchesActivity.this, "Matches", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MatchesActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_question:
                         //Toast.makeText(MatchesActivity.this, "Questions", Toast.LENGTH_SHORT).show();
@@ -76,7 +75,7 @@ public class MatchesActivity extends AppCompatActivity {
                         startActivity(c);
                         break;
                 }
-                return false;
+                return true;
             }
         });
 

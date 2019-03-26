@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -45,7 +44,7 @@ public class LogoutActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.action_matches:
-                        Toast.makeText(LogoutActivity.this, "Matches", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LogoutActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         Intent b = new Intent(LogoutActivity.this, MatchesActivity.class);
                         startActivity(b);
                         break;
@@ -55,10 +54,10 @@ public class LogoutActivity extends AppCompatActivity {
                         startActivity(c);
                         break;
                     case R.id.action_logout:
-                        Toast.makeText(LogoutActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LogoutActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                         break;
                 }
-                return false;
+                return true;
             }
         });
 

@@ -61,9 +61,17 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ViewHo
                 Glide.with(context).load(shortImage.getUrl()).into(ivShortImage);
             }
 
-            tvShortUsername.setText(profile.getUser().getUsername());
+            String username = profile.getUser().getUsername();
+            if (username != null && !(username.equals("")))
+                tvShortUsername.setText("@" + username);
+            else
+                tvShortUsername.setText("@Default");
 
-            tvShortBio.setText(profile.getShortBio());
+            String shortBio = profile.getShortBio();
+            if (shortBio != null && !(shortBio.equals("")))
+                tvShortBio.setText(shortBio);
+            else
+                tvShortBio.setText("This is the default text for the short bio.");
         }
     }
 }

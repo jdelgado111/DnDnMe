@@ -4,23 +4,23 @@
 
     <item
         android:id="@+id/action_profile"
-        android:icon="@drawable/icon-user"
-        android:title="Home"
+        android:icon="@drawable/icon_user"
+        android:title="Profile"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_matches"
-        android:icon="@drawable/icon-users"
+        android:icon="@drawable/icon_users"
         android:title="Matches"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_question"
-        android:icon="@drawable/icon-question"
+        android:icon="@drawable/icon_question"
         android:title="Questions"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_logout"
-        android:icon="@drawable/icon-power"
+        android:icon="@drawable/icon_power"
         android:title="Logout"
         app:showAsAction="always" />
 

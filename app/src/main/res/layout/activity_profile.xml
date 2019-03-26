@@ -10,10 +10,12 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -21,23 +23,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:background="@color/gray"
         tools:text="username" />
 
     <TextView
         android:id="@+id/tvShortBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/tvUsername"
         android:layout_toEndOf="@+id/ivProfileImage"
-        tools:text="This is a short bio" />
+        android:background="@color/gray"
+        tools:text="This is the short bio section" />
 
     <TextView
         android:id="@+id/tvLongBio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/ivProfileImage"
         android:layout_alignParentStart="true"
+        android:background="@color/gray"
         tools:text="The long bio section goes here" />
 
     <android.support.design.widget.BottomNavigationView

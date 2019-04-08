@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null)
             goMainActivity();
 
-        etUsername = findViewById(R.id.etUsername);
+        etUsername = findViewById(R.id.tvUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignUp);

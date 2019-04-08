@@ -7,8 +7,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -16,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -27,8 +31,10 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView tvUsername;
     private TextView tvShortBio;
     private TextView tvLongBio;
+    private Button btnEdit;
 
     private Profile userProfile;
+    private ParseUser user;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -41,9 +47,10 @@ public class ProfileActivity extends AppCompatActivity {
         tvUsername = findViewById(R.id.tvUsername);
         tvShortBio = findViewById(R.id.tvShortBio);
         tvLongBio = findViewById(R.id.tvLongBio);
+        btnEdit = findViewById(R.id.btnEdit);
 
         //get current user
-        final ParseUser user = ParseUser.getCurrentUser();
+        user = ParseUser.getCurrentUser();
 
         //get Profile data from server
         //and fill in profile view
@@ -80,6 +87,41 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_profile);
+
+
+        //listener on edit button
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String shortBio = tvShortBio.getText().toString();
+                String longBio = tvLongBio.getText().toString();
+
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                intent.putExtra("shortBio", shortBio);
+                intent.putExtra("longBio", longBio);
+                ProfileActivity.this.startActivityForResult(intent, 100);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100 && resultCode == RESULT_OK) { // this 100 needs to match the 100 we used when we called startActivityForResult
+            String shortBio = data.getExtras().getString("shortBio");
+            String longBio = data.getExtras().getString("longBio");
+
+            if (!shortBio.matches("") && !longBio.matches("")) {
+                tvShortBio.setText(shortBio);
+                tvLongBio.setText(longBio);
+
+                editProfile(user, shortBio, longBio);
+
+                Toast.makeText(this, "Edit saved", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Edit not saved due to blank entry", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void fillProfile(final ParseUser user) {
@@ -122,6 +164,41 @@ public class ProfileActivity extends AppCompatActivity {
                     tvLongBio.setText(longBio);
                 else
                     tvLongBio.setText("This is the default text for the long bio.");
+            }
+        });
+    }
+
+    private void editProfile(final ParseUser user, final String shortBio, final String longBio) {
+        Log.d(TAG, "in getProfile");
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        query.whereEqualTo(Profile.KEY_USER, user);
+        query.findInBackground(new FindCallback<Profile>() {
+            @Override
+            public void done(List<Profile> profiles, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                userProfile = profiles.get(0);
+
+                userProfile.setShortBio(shortBio);
+                userProfile.setLongBio(longBio);
+
+                userProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving");
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        Log.d(TAG, "Success!");
+                    }
+                });
             }
         });
     }

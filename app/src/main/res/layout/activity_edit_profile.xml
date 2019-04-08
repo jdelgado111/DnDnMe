@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/ivProfileImage"
+        android:id="@+id/ivProfileImageEdit"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentStart="true"
@@ -24,38 +24,45 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImageEdit"
         android:background="@color/gray"
-        android:textSize="18sp"
         tools:text="username" />
 
-    <TextView
-        android:id="@+id/tvShortBio"
+    <EditText
+        android:id="@+id/etShortBio"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_below="@+id/tvUsername"
-        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_toEndOf="@+id/ivProfileImageEdit"
         android:background="@color/gray"
-        android:textSize="18sp"
         tools:text="This is the short bio section" />
 
-    <TextView
-        android:id="@+id/tvLongBio"
+    <EditText
+        android:id="@+id/etLongBio"
         android:layout_width="400dp"
         android:layout_height="100dp"
-        android:layout_below="@+id/ivProfileImage"
+        android:layout_below="@+id/ivProfileImageEdit"
         android:layout_alignParentStart="true"
         android:background="@color/gray"
-        android:textSize="18sp"
         tools:text="The long bio section goes here" />
 
     <Button
-        android:id="@+id/btnEdit"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvLongBio"
+        android:layout_below="@id/etLongBio"
+        android:layout_alignLeft="@id/etLongBio"
         android:layout_marginTop="20dp"
-        android:text="Edit" />
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etLongBio"
+        android:layout_alignRight="@id/etLongBio"
+        android:layout_marginTop="20dp"
+        android:text="Cancel" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"

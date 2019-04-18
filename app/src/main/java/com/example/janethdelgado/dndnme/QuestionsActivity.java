@@ -5,15 +5,24 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
+import java.util.Random;
 
 public class QuestionsActivity extends AppCompatActivity {
+
+    private final String TAG = "QuestionsActivity";
 
     private TextView tvQuestion;
     private RadioGroup rgButtons;
@@ -22,16 +31,20 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    //private List<Questions> questions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
         tvQuestion = findViewById(R.id.tvQuestion);
-        //TODO: set text to fill text view from Parse
 
-        buttonListener();
+        //get list of questions
+        //questions = new ArrayList<>();
+        queryQuestions();
 
+        //bottom navigation
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -61,11 +74,44 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         });
 
-        // Set default selection
+        // set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_question);
     }
 
-    private void buttonListener() {
+    private void queryQuestions() {
+        ParseQuery<Questions> questionQuery = new ParseQuery<Questions>(Questions.class);
+        //questionQuery.include(Profile.KEY_USER);
+        questionQuery.findInBackground(new FindCallback<Questions>() {
+            @Override
+            public void done(List<Questions> questions, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                //questions.addAll(qs);
+                Questions q = questions.get(0);
+                String question = q.getQuestion();
+
+                //set first question
+                tvQuestion.setText(question);
+
+                //remove first question from list
+                questions.remove(0);
+
+                buttonListener(questions);
+
+                //log for debugging purposes
+                for (int i = 0; i < questions.size(); i++) {
+                    Questions ques = questions.get(i);
+                    Log.d(TAG, "Question: " + ques.getQuestion());
+                }
+            }
+        });
+    }
+
+    private void buttonListener(final List<Questions> questions) {
         rgButtons = findViewById(R.id.rgButtons);
         btnSubmit = findViewById(R.id.btnSubmit);
 
@@ -78,9 +124,39 @@ public class QuestionsActivity extends AppCompatActivity {
                 // find the radiobutton by returned id
                 rBtn = findViewById(selectedId);
 
-                Toast.makeText(QuestionsActivity.this,
-                        rBtn.getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(QuestionsActivity.this, rBtn.getText(), Toast.LENGTH_SHORT).show();
+
+                //TODO: update stats
+
+                //go to next question
+                int i = getRandomNumber(0, questions.size());
+                if (i < questions.size()) {
+                    Questions q = questions.get(i);
+                    String ques = q.getQuestion();
+                    tvQuestion.setText(ques);
+
+                    //remove used question from list
+                    questions.remove(i);
+                }
+                else if (i == questions.size() && i != 0) {
+                    i = 0;
+                    Questions q = questions.get(i);
+                    String ques = q.getQuestion();
+                    tvQuestion.setText(ques);
+
+                    //remove used question from list
+                    questions.remove(i);
+                }
+                else {
+                    String end = "Questionnaire Complete!";
+                    tvQuestion.setText(end);
+                }
             }
         });
+    }
+
+    private int getRandomNumber(int minNumber, int maxNumber){
+        Random rand = new Random();
+        return rand.nextInt((maxNumber - minNumber) + 1) + minNumber;
     }
 }

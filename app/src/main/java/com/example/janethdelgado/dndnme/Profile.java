@@ -21,9 +21,7 @@ public class Profile extends ParseObject {
         put(KEY_IMAGE, parseFile);
     }
 
-    public String getShortBio() {
-        return getString(KEY_SHORT_BIO);
-    }
+    public String getShortBio() { return getString(KEY_SHORT_BIO); }
     public void setShortBio(String newBio) {
         put(KEY_SHORT_BIO, newBio);
     }

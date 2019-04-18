@@ -102,11 +102,11 @@ public class QuestionsActivity extends AppCompatActivity {
 
                 buttonListener(questions);
 
-                //log for debugging purposes
+                /*//log for debugging purposes
                 for (int i = 0; i < questions.size(); i++) {
                     Questions ques = questions.get(i);
                     Log.d(TAG, "Question: " + ques.getQuestion());
-                }
+                }*/
             }
         });
     }
@@ -127,6 +127,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 //Toast.makeText(QuestionsActivity.this, rBtn.getText(), Toast.LENGTH_SHORT).show();
 
                 //TODO: update stats
+                //calculate stats from answers given (sum + average??)
+                //set state in Parse
 
                 //go to next question
                 int i = getRandomNumber(0, questions.size());

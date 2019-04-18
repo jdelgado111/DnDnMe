@@ -7,12 +7,15 @@ import com.parse.ParseUser;
 
 @ParseClassName("Profile")
 public class Profile extends ParseObject {
-    // Ensure that your subclass has a public default constructor
 
     public static final String KEY_IMAGE = "profileImage";
     public static final String KEY_SHORT_BIO = "shortBio";
     public static final String KEY_LONG_BIO = "longBio";
     public static final String KEY_USER = "user";
+
+    // Ensure that your subclass has a public default constructor
+    public Profile() {
+    }
 
     public ParseFile getProfileImage() {
         return getParseFile(KEY_IMAGE);

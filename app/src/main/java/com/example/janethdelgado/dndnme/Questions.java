@@ -10,6 +10,9 @@ public class Questions extends ParseObject {
     public static final String KEY_WEIGHT = "weight";
     public static final String KEY_QUES = "question";
 
+    public Questions() {
+    }
+
     public String getCategory() {
         return getString(KEY_CAT);
     }

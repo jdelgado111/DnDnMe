@@ -22,55 +22,85 @@
         android:textColor="#000000"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/tvDisagree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Strongly Disagree"
+        android:layout_below="@id/tvQuestion"
+        android:paddingLeft="10dp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tvNeutral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Neutral"
+        android:layout_below="@id/tvQuestion"
+        android:layout_centerInParent="true"
+        android:paddingRight="5dp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/tvAgree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Strongly Agree"
+        android:layout_below="@id/tvQuestion"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="15dp"
+        android:textColor="#000000"/>
+
     <RadioGroup
         android:id="@+id/rgButtons"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvQuestion">
+        android:paddingTop="10dp"
+        android:layout_below="@id/tvDisagree">
 
         <RadioButton
             android:id="@+id/rBtn1"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginBottom="20dp"
-            android:text="1"
+            android:layout_weight="1"
+            android:contentDescription="1"
             android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rBtn2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:text="2"
-            android:textSize="20sp"/>
+            android:layout_weight="1"
+            android:contentDescription="2"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rBtn3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:text="3"
+            android:layout_weight="1"
             android:checked="true"
-            android:textSize="20sp"/>
+            android:contentDescription="3"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/rBtn4"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="4"
+            android:contentDescription="4"
             android:textSize="20sp"/>
 
         <RadioButton
             android:id="@+id/rBtn5"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="5"
-            android:textSize="20sp"/>
+            android:layout_weight="1"
+            android:contentDescription="5"
+            android:textSize="20sp" />
     </RadioGroup>
 
     <Button

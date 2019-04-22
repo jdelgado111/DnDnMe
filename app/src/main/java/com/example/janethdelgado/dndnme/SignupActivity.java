@@ -91,6 +91,8 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+    //TODO: add createStats method
+
     private void goMainActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
         startActivity(i);

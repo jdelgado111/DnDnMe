@@ -169,7 +169,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void editProfile(final ParseUser user, final String shortBio, final String longBio) {
-        Log.d(TAG, "in getProfile");
+        //Log.d(TAG, "in getProfile");
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
         query.whereEqualTo(Profile.KEY_USER, user);

@@ -396,25 +396,12 @@ public class QuestionsActivity extends AppCompatActivity {
                 // this method is called when the animation is finished playing
                 tvQuestion.startAnimation(rightInAnim);
 
-                // advance our pointer index so we can show the next card
-                //currentCardDisplayedIndex++;
-                //currentCardDisplayedIndex = getRandomNumber(0, allFlashcards.size());
-
-                // make sure we don't get an IndexOutOfBoundsError if we are viewing the last indexed card in our list
-                //if (currentCardDisplayedIndex > allFlashcards.size() - 1)
-                //    currentCardDisplayedIndex = 0;
-
-                // set the question and answer TextViews with data from the database
-                //((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
-                //((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
-
-                //findViewById(R.id.flashcard_answer).setVisibility(View.INVISIBLE);
                 tvQuestion.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-                // we don't need to worry about this method
+                // don't need to worry about this method
             }
         });
 

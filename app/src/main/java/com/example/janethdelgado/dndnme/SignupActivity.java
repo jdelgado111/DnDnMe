@@ -64,12 +64,16 @@ public class SignupActivity extends AppCompatActivity {
                 //create default Profile for new User
                 createProfile(user);
 
+                //create default Stats for new User
+                createStats(user);
+
                 // navigate to new activity if the user has signed up properly
                 goMainActivity();
             }
         });
     }
 
+    //create blank profile
     private void createProfile(ParseUser parseUser){
         Profile profile = new Profile();
 
@@ -91,7 +95,40 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: add createStats method
+    //TODO: update default category
+    //create default stats
+    private void createStats(ParseUser parseUser) {
+        Stats stats = new Stats();
+
+        stats.setUser(parseUser);
+
+        stats.setPStat1(1);
+        stats.setPStat2(1);
+        stats.setPStat3(1);
+        stats.setPStat4(1);
+        stats.setPStat5(1);
+
+        stats.setSStat1(1);
+        stats.setSStat2(1);
+        stats.setSStat3(1);
+        stats.setSStat4(1);
+        stats.setSStat5(1);
+
+        stats.setPreference("Category 1");
+
+        stats.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving");
+                    e.printStackTrace();
+                    return;
+                }
+
+                Log.d(TAG, "Success!");
+            }
+        });
+    }
 
     private void goMainActivity() {
         Intent i = new Intent(this, ProfileActivity.class);

@@ -25,7 +25,7 @@ public class MatchesActivity extends AppCompatActivity {
     private RecyclerView rvProfiles;
     private ProfilesAdapter adapter;
     private List<Profile> mProfiles;
-    private List<Profile> tempProfiles;
+    //private List<Profile> tempProfiles;
 
     private BottomNavigationView bottomNavigationView;
 
@@ -36,7 +36,7 @@ public class MatchesActivity extends AppCompatActivity {
     private double minRange;
     private double statsCheck;
 
-    private int position;
+    //private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class MatchesActivity extends AppCompatActivity {
         mProfiles = new ArrayList<>();
 
         //create temp data source
-        tempProfiles = new ArrayList<>();
+        //tempProfiles = new ArrayList<>();
 
         //create the adapter
         adapter = new ProfilesAdapter(this, mProfiles);
@@ -231,7 +231,7 @@ public class MatchesActivity extends AppCompatActivity {
         Stats stat;
 
         for (int i = 0; i < statsList.size(); i++) {
-            position = i;
+            //position = i;
             stat = statsList.get(i);
             ParseUser statUser = stat.getUser();
 

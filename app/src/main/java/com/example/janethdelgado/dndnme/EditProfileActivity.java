@@ -1,15 +1,33 @@
 package com.example.janethdelgado.dndnme;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.util.List;
+
 public class EditProfileActivity extends AppCompatActivity {
+
+    private static final String TAG = "EditProfileActivity";
+
+    // PICK_PHOTO_CODE is a constant integer
+    public final static int PICK_PHOTO_CODE = 1046;
 
     private ImageView ivProfileImageEdit;
     private TextView tvUsername;
@@ -17,6 +35,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView etLongBio;
     private Button btnSave;
     private Button btnCancel;
+
+    private String filepath;
+    //private File imageFile;
+    private Profile userProfile;
+    private ParseUser user = ParseUser.getCurrentUser();
+    //private Uri photoUri;
+    //private Bitmap imageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +55,22 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
 
-        String shortBio = getIntent().getStringExtra("shortBio");
-        String longBio = getIntent().getStringExtra("longBio");
+        //set views
+        fillProfile();
 
-        etShortBio.setText(shortBio);
-        etLongBio.setText(longBio);
+        ivProfileImageEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create intent for picking a photo from the gallery
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                // as long as the result is not null, it's safe to use the intent
+                if (i.resolveActivity(getPackageManager()) != null) {
+                    // Bring up gallery to select a photo
+                    startActivityForResult(i, PICK_PHOTO_CODE);
+                }
+            }
+        });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,11 +90,140 @@ public class EditProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                Intent data = new Intent(); // create a new Intent to put our data
-                data.putExtra("shortBio", shortBio); // puts one string into the Intent (key, string)
-                data.putExtra("longBio", longBio); // puts another string into the Intent (key, string)
-                setResult(RESULT_OK, data); // set result code and bundle data for response
+                //Log.d(TAG, "Filepath: " + filepath);
+
+                editProfile(user, shortBio, longBio);
+
+                Intent i = new Intent(); // create a new Intent to put our data
+                setResult(RESULT_OK, i); // set result code and bundle data for response
                 finish(); // closes this activity and pass data to the original activity that launched this activity
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            //get Uri
+            Uri photoUri = data.getData();
+
+            // preview the photo (based on Uri)
+            Glide.with(EditProfileActivity.this).load(photoUri).into(ivProfileImageEdit);
+
+            //filepath = getPhotoFilepath(photoUri);
+        }
+    }
+
+    /*
+    // Returns the File for a photo stored on disk given the Uri
+    private File getPhotoFile(Uri photoUri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(photoUri, projection, null, null, null);
+        //int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+        String imagePath = cursor.getString(column_index);
+        //String filePath = cursor.getString(columnIndex);
+        cursor.close();
+
+        //Bitmap imageBitmap = BitmapFactory.decodeFile(filePath);
+
+        Log.d(TAG, "Image path: " + imagePath);
+
+        File file = new File(imagePath);
+
+        return file;
+    }
+
+    private String getPhotoFilepath(Uri photoUri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(photoUri, projection, null, null, null);
+        //int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        cursor.moveToFirst();
+        int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+        String filepath = cursor.getString(column_index);
+        cursor.close();
+        return filepath;
+    }
+    */
+
+    private void fillProfile() {
+        //Log.d(TAG, "in getProfile");
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        query.whereEqualTo(Profile.KEY_USER, user);
+        query.findInBackground(new FindCallback<Profile>() {
+            @Override
+            public void done(List<Profile> profiles, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                userProfile = profiles.get(0);
+
+                ParseFile image = userProfile.getProfileImage();
+                String username = user.getUsername();
+                String shortBio = userProfile.getShortBio();
+                String longBio = userProfile.getLongBio();
+
+                //populate Views
+                if(image != null) {
+                    Glide.with(EditProfileActivity.this).load(image.getUrl()).into(ivProfileImageEdit);
+                }
+
+                if (username != null && !(username.equals("")))
+                    tvUsername.setText("@" + username);
+                else
+                    tvUsername.setText("@Default");
+
+                if (shortBio != null && !(shortBio.equals("")))
+                    etShortBio.setText(shortBio);
+                else
+                    etShortBio.setText("This is the default text for the short bio.");
+
+                if (longBio != null && !(longBio.equals("")))
+                    etLongBio.setText(longBio);
+                else
+                    etLongBio.setText("This is the default text for the long bio.");
+            }
+        });
+    }
+
+
+    private void editProfile(final ParseUser user, final String sBio, final String lBio) {
+        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
+        query.include(Profile.KEY_USER);
+        query.whereEqualTo(Profile.KEY_USER, user);
+        query.findInBackground(new FindCallback<Profile>() {
+            @Override
+            public void done(List<Profile> profiles, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error with query");
+                    e.printStackTrace();
+                    return;
+                }
+
+                userProfile = profiles.get(0);
+
+                userProfile.setShortBio(sBio);
+                userProfile.setLongBio(lBio);
+
+                userProfile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, "Error while saving");
+                            e.printStackTrace();
+                            return;
+                        }
+
+                        Log.d(TAG, "Success!");
+                    }
+                });
             }
         });
     }

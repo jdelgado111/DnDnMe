@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private TextView tvNeutral;
     private TextView tvAgree;
     private RadioGroup rgButtons;
-    private RadioButton rBtn;
+    //private RadioButton rBtn;
     private Button btnSubmit;
 
     private BottomNavigationView bottomNavigationView;
@@ -156,6 +157,8 @@ public class QuestionsActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                animation();
+
                 // get selected radio button from radioGroup
                 int selectedId = rgButtons.getCheckedRadioButtonId();
 
@@ -375,5 +378,46 @@ public class QuestionsActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void animation() {
+        final Animation leftOutAnim = AnimationUtils.loadAnimation(this, R.anim.left_out);
+        final Animation rightInAnim = AnimationUtils.loadAnimation(this, R.anim.right_in);
+
+        leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // this method is called when the animation first starts
+                tvQuestion.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // this method is called when the animation is finished playing
+                tvQuestion.startAnimation(rightInAnim);
+
+                // advance our pointer index so we can show the next card
+                //currentCardDisplayedIndex++;
+                //currentCardDisplayedIndex = getRandomNumber(0, allFlashcards.size());
+
+                // make sure we don't get an IndexOutOfBoundsError if we are viewing the last indexed card in our list
+                //if (currentCardDisplayedIndex > allFlashcards.size() - 1)
+                //    currentCardDisplayedIndex = 0;
+
+                // set the question and answer TextViews with data from the database
+                //((TextView) findViewById(R.id.flashcard_question)).setText(allFlashcards.get(currentCardDisplayedIndex).getQuestion());
+                //((TextView) findViewById(R.id.flashcard_answer)).setText(allFlashcards.get(currentCardDisplayedIndex).getAnswer());
+
+                //findViewById(R.id.flashcard_answer).setVisibility(View.INVISIBLE);
+                tvQuestion.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // we don't need to worry about this method
+            }
+        });
+
+        tvQuestion.startAnimation(leftOutAnim);
     }
 }

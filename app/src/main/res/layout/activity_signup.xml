@@ -50,6 +50,6 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:padding="20dp"
-        android:background="@color/green"/>
+        android:background="@drawable/button2"/>
 
 </LinearLayout>

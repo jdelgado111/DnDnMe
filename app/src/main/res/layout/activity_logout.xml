@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+
+    android:background="@color/colorPrimary"
     tools:context=".LogoutActivity">
 
     <Button
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Logout"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/button3"
         android:layout_marginTop="250dp"/>
 
     <android.support.design.widget.BottomNavigationView
@@ -20,5 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
         app:menu="@menu/menu_bottom_navigation" />
 </RelativeLayout>

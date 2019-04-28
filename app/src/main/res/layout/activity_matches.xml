@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".MatchesActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvProfiles"
+        android:background="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -25,11 +27,12 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvProfiles"
+        android:background="@color/colorPrimaryDark"
         app:menu="@menu/menu_bottom_navigation" />
 
 </android.support.constraint.ConstraintLayout>

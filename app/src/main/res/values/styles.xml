@@ -1,11 +1,34 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="actionBarTheme">@style/AppBaseTheme.Toolbar</item>
     </style>
 
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:background">@drawable/round_tv</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextViewTitle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppBaseTheme.Toolbar" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textViewStyle">@style/TextViewTitle</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
 </resources>

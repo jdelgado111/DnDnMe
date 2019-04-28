@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+
+    android:background="@color/colorPrimary"
     tools:context=".QuestionsActivity">
 
 
@@ -13,13 +14,11 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="125dp"
         android:layout_marginBottom="30dp"
-        android:background="#C0C0C0"
         android:padding="30dp"
         android:text="This is an example for the questions screen"
         android:textAlignment="center"
-        android:textColor="#000000"
         android:textSize="24sp" />
 
     <TextView
@@ -28,8 +27,9 @@
         android:layout_height="wrap_content"
         android:text="Strongly Disagree"
         android:layout_below="@id/tvQuestion"
-        android:paddingLeft="10dp"
-        android:textColor="#000000"/>
+        android:paddingStart="10dp"
+        android:textColor="#000000"
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tvNeutral"
@@ -38,8 +38,9 @@
         android:text="Neutral"
         android:layout_below="@id/tvQuestion"
         android:layout_centerInParent="true"
-        android:paddingRight="5dp"
-        android:textColor="#000000"/>
+        android:paddingEnd="5dp"
+        android:textColor="#000000"
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tvAgree"
@@ -48,8 +49,9 @@
         android:text="Strongly Agree"
         android:layout_below="@id/tvQuestion"
         android:layout_alignParentEnd="true"
-        android:paddingRight="15dp"
-        android:textColor="#000000"/>
+        android:paddingEnd="15dp"
+        android:textColor="#000000"
+        android:background="@color/colorPrimary" />
 
     <RadioGroup
         android:id="@+id/rgButtons"
@@ -58,7 +60,8 @@
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
-        android:layout_below="@id/tvDisagree">
+        android:layout_below="@id/tvDisagree"
+        app:buttonTint="@color/colorAccent">
 
         <RadioButton
             android:id="@+id/rBtn1"
@@ -111,6 +114,7 @@
         android:layout_centerHorizontal="true"
         android:text="Submit"
         android:textAlignment="center"
+        android:background="@drawable/button3"
         android:textSize="18sp" />
 
     <android.support.design.widget.BottomNavigationView
@@ -118,5 +122,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
         app:menu="@menu/menu_bottom_navigation" />
 </RelativeLayout>

@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:padding="10dp"
-    android:background="#C0C0C0" >
+    android:background="@drawable/round_tv" >
 
 
     <ImageView
         android:id="@+id/ivShortImage"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -22,6 +22,7 @@
         android:layout_toRightOf="@id/ivShortImage"
         android:textSize="18sp"
         tools:text="Username"
+
         android:layout_marginBottom="10dp"/>
 
     <TextView
@@ -31,5 +32,6 @@
         android:layout_below="@id/tvShortUsername"
         android:layout_toRightOf="@id/ivShortImage"
         android:textSize="18sp"
+
         tools:text="This is the short bio section of the short profile" />
 </RelativeLayout>

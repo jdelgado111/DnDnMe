@@ -47,8 +47,22 @@ public class ProfileActivity extends AppCompatActivity {
         tvLongBio = findViewById(R.id.tvLongBio);
         btnEdit = findViewById(R.id.btnEdit);
 
-        //get current user
-        user = ParseUser.getCurrentUser();
+        ParseUser possibleUser = getIntent().getParcelableExtra("user");
+
+        //get user to display
+        if (possibleUser != null){
+            user = possibleUser;
+        }
+        else {
+            user = ParseUser.getCurrentUser();
+        }
+
+        if(user == ParseUser.getCurrentUser()) {
+            btnEdit.setVisibility(View.VISIBLE);
+        }
+        else {
+            btnEdit.setVisibility(View.INVISIBLE);
+        }
 
         //get Profile data from server
         //and fill in profile view
@@ -91,14 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //String shortBio = tvShortBio.getText().toString();
-                //String longBio = tvLongBio.getText().toString();
-
                 Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-
-                //intent.putExtra("shortBio", shortBio);
-                //intent.putExtra("longBio", longBio);
                 ProfileActivity.this.startActivityForResult(intent, 100);
             }
         });
@@ -155,41 +162,4 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*
-    private void editProfile(final ParseUser user, final String shortBio, final String longBio) {
-        //Log.d(TAG, "in getProfile");
-        ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
-        query.include(Profile.KEY_USER);
-        query.whereEqualTo(Profile.KEY_USER, user);
-        query.findInBackground(new FindCallback<Profile>() {
-            @Override
-            public void done(List<Profile> profiles, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-
-                userProfile = profiles.get(0);
-
-                userProfile.setShortBio(shortBio);
-                userProfile.setLongBio(longBio);
-
-                userProfile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "Error while saving");
-                            e.printStackTrace();
-                            return;
-                        }
-
-                        Log.d(TAG, "Success!");
-                    }
-                });
-            }
-        });
-    }
-    */
 }

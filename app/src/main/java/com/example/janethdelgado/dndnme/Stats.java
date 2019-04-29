@@ -4,6 +4,11 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+//cat1 = rules
+//cat2 = openness
+//cat3 = experience
+//cat4 = creativity
+
 @ParseClassName("Stats")
 public class Stats extends ParseObject {
 
@@ -12,12 +17,12 @@ public class Stats extends ParseObject {
     public static final String KEY_PSTAT2 = "personalStat2";
     public static final String KEY_PSTAT3 = "personalStat3";
     public static final String KEY_PSTAT4 = "personalStat4";
-    public static final String KEY_PSTAT5 = "personalStat5";
+    //public static final String KEY_PSTAT5 = "personalStat5";
     public static final String KEY_SSTAT1 = "searchStat1";
     public static final String KEY_SSTAT2 = "searchStat2";
     public static final String KEY_SSTAT3 = "searchStat3";
     public static final String KEY_SSTAT4 = "searchStat4";
-    public static final String KEY_SSTAT5 = "searchStat5";
+    //public static final String KEY_SSTAT5 = "searchStat5";
     public static final String KEY_PREF = "preference";
 
     public Stats() {
@@ -58,12 +63,12 @@ public class Stats extends ParseObject {
         put(KEY_PSTAT4, newStat);
     }
 
-    public double getPStat5() {
-        return getDouble(KEY_PSTAT5);
-    }
-    public void setPStat5(double newStat) {
-        put(KEY_PSTAT5, newStat);
-    }
+    //public double getPStat5() {
+    //    return getDouble(KEY_PSTAT5);
+    //}
+    //public void setPStat5(double newStat) {
+    //    put(KEY_PSTAT5, newStat);
+    //}
 
     public double getSStat1() {
         return getDouble(KEY_SSTAT1);
@@ -93,12 +98,14 @@ public class Stats extends ParseObject {
         put(KEY_SSTAT4, newStat);
     }
 
+    /*
     public double getSStat5() {
         return getDouble(KEY_SSTAT5);
     }
     public void setSStat5(double newStat) {
         put(KEY_SSTAT5, newStat);
     }
+    */
 
     public String getPreference() {
         return getString(KEY_PREF);

@@ -95,7 +95,6 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: update default category
     //create default stats
     private void createStats(ParseUser parseUser) {
         Stats stats = new Stats();
@@ -106,15 +105,15 @@ public class SignupActivity extends AppCompatActivity {
         stats.setPStat2(1);
         stats.setPStat3(1);
         stats.setPStat4(1);
-        stats.setPStat5(1);
+        //stats.setPStat5(1);
 
         stats.setSStat1(1);
         stats.setSStat2(1);
         stats.setSStat3(1);
         stats.setSStat4(1);
-        stats.setSStat5(1);
+        //stats.setSStat5(1);
 
-        stats.setPreference("Category 1");
+        stats.setPreference("Rules");
 
         stats.saveInBackground(new SaveCallback() {
             @Override

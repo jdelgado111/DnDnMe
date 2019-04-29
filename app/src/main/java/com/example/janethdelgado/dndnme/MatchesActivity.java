@@ -125,31 +125,31 @@ public class MatchesActivity extends AppCompatActivity {
                 Log.d(TAG, "In selectMatches - Preference: " + preference);
 
                 switch (preference) {
-                    case "Category 1":
+                    case "Rules":
                         statsCheck = stats.getSStat1();
                         maxRange = statsCheck + 1;
                         minRange = statsCheck - 1;
                         break;
-                    case "Category 2":
+                    case "Openness":
                         statsCheck = stats.getSStat2();
                         maxRange = statsCheck + 1;
                         minRange = statsCheck - 1;
                         break;
-                    case "Category 3":
+                    case "Experience":
                         statsCheck = stats.getSStat3();
                         maxRange = statsCheck + 1;
                         minRange = statsCheck - 1;
                         break;
-                    case "Category 4":
+                    case "Creativity":
                         statsCheck = stats.getSStat4();
                         maxRange = statsCheck + 1;
                         minRange = statsCheck - 1;
                         break;
-                    case "Category 5":
-                        statsCheck = stats.getSStat5();
-                        maxRange = statsCheck + 1;
-                        minRange = statsCheck - 1;
-                        break;
+                    //case "Category 5":
+                    //    statsCheck = stats.getSStat5();
+                    //    maxRange = statsCheck + 1;
+                    //    minRange = statsCheck - 1;
+                    //    break;
                 }
 
                 //find stats that match
@@ -157,26 +157,9 @@ public class MatchesActivity extends AppCompatActivity {
                 findMatches(preference);
             }
         });
-
-        /*statQuery.findInBackground(new FindCallback<Stats>() {
-            public void done(Stats returnedStat, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error with query");
-                    e.printStackTrace();
-                    return;
-                }
-
-                stats = returnedStat;
-
-                //get user's preference (category)
-                preference = stats.getPreference();
-
-
-            }
-        }); */
     }
 
-    private void findMatches(String prefer) {
+    private void findMatches(final String prefer) {
         Log.d(TAG, "Inside findMatches");
 
         //String pref = prefer;
@@ -184,31 +167,31 @@ public class MatchesActivity extends AppCompatActivity {
         ParseQuery<Stats> statsQuery = ParseQuery.getQuery(Stats.class);
         Log.d(TAG, "In findMatches - Preference: " + prefer);
         switch (prefer) {
-            case "Category 1":
+            case "Rules":
                 statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT1, maxRange);
                 statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT1, minRange);
                 statsQuery.addDescendingOrder(Stats.KEY_PSTAT1);
                 break;
-            case "Category 2":
+            case "Openness":
                 statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT2, maxRange);
                 statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT2, minRange);
                 statsQuery.addDescendingOrder(Stats.KEY_PSTAT2);
                 break;
-            case "Category 3":
+            case "Experience":
                 statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT3, maxRange);
                 statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT3, minRange);
                 statsQuery.addDescendingOrder(Stats.KEY_PSTAT3);
                 break;
-            case "Category 4":
+            case "Creativity":
                 statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT4, maxRange);
                 statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT4, minRange);
                 statsQuery.addDescendingOrder(Stats.KEY_PSTAT4);
                 break;
-            case "Category 5":
-                statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT5, maxRange);
-                statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT5, minRange);
-                statsQuery.addDescendingOrder(Stats.KEY_PSTAT5);
-                break;
+            //case "Category 5":
+            //    statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT5, maxRange);
+            //    statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT5, minRange);
+            //    statsQuery.addDescendingOrder(Stats.KEY_PSTAT5);
+            //    break;
         }
 
         statsQuery.findInBackground(new FindCallback<Stats>() {
@@ -218,6 +201,13 @@ public class MatchesActivity extends AppCompatActivity {
                     Log.e(TAG, "Error with query - findMatches");
                     e.printStackTrace();
                     return;
+                }
+
+                if(returnedStats.size() == 0) {
+                    minRange -= 6;
+                    maxRange +=6;
+                    Log.d(TAG, "Searching again - Preference: " + prefer);
+                    findMatches(prefer);
                 }
 
                 //get profiles tied to matching stats

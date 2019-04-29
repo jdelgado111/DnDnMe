@@ -29,6 +29,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private final int QUESTIONS_PER_CATEGORY = 1;
 
     private TextView tvQuestion;
+    private TextView tvQuestion2;
     private TextView tvDisagree;
     private TextView tvNeutral;
     private TextView tvAgree;
@@ -42,19 +43,19 @@ public class QuestionsActivity extends AppCompatActivity {
     private double persStat2;
     private double persStat3;
     private double persStat4;
-    private double persStat5;
+    //private double persStat5;
 
     private double searchStat1;
     private double searchStat2;
     private double searchStat3;
     private double searchStat4;
-    private double searchStat5;
+    //private double searchStat5;
 
     private double prefValue1;
     private double prefValue2;
     private double prefValue3;
     private double prefValue4;
-    private double prefValue5;
+    //private double prefValue5;
 
     private String pref;
 
@@ -70,12 +71,15 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
 
         tvQuestion = findViewById(R.id.tvQuestion);
+        tvQuestion2 = findViewById(R.id.tvQuestion2);
         tvDisagree = findViewById(R.id.tvDisagree);
         tvNeutral = findViewById(R.id.tvNeutral);
         tvAgree = findViewById(R.id.tvAgree);
 
         rgButtons = findViewById(R.id.rgButtons);
         btnSubmit = findViewById(R.id.btnSubmit);
+
+        tvQuestion2.setVisibility(View.INVISIBLE);
 
         //get list of questions
         //questions = new ArrayList<>();
@@ -171,7 +175,13 @@ public class QuestionsActivity extends AppCompatActivity {
                 if (i < questions.size()) {
                     q = questions.get(i);
                     String ques = q.getQuestion();
-                    tvQuestion.setText(ques);
+
+                    if(tvQuestion.getVisibility() == View.VISIBLE) {
+                        tvQuestion2.setText(ques);
+                    }
+                    else if(tvQuestion2.getVisibility() == View.VISIBLE) {
+                        tvQuestion.setText(ques);
+                    }
 
                     //remove used question from list
                     questions.remove(i);
@@ -180,7 +190,13 @@ public class QuestionsActivity extends AppCompatActivity {
                     i = 0;
                     q = questions.get(i);
                     String ques = q.getQuestion();
-                    tvQuestion.setText(ques);
+
+                    if(tvQuestion.getVisibility() == View.VISIBLE) {
+                        tvQuestion2.setText(ques);
+                    }
+                    else if(tvQuestion2.getVisibility() == View.VISIBLE) {
+                        tvQuestion.setText(ques);
+                    }
 
                     //remove used question from list
                     questions.remove(i);
@@ -239,51 +255,51 @@ public class QuestionsActivity extends AppCompatActivity {
         String cat = q.getCategory();
 
         switch(cat) {
-            case "Category 1 Personal":
+            case "Rules Personal":
                 persStat1 += value;
                 break;
-            case "Category 2 Personal":
+            case "Openness Personal":
                 persStat2 += value;
                 break;
-            case "Category 3 Personal":
+            case "Experience Personal":
                 persStat3 += value;
                 break;
-            case "Category 4 Personal":
+            case "Creativity Personal":
                 persStat4 += value;
                 break;
-            case "Category 5 Personal":
-                persStat5 += value;
-                break;
-            case "Category 1 Search":
+            //case "Category 5 Personal":
+            //    persStat5 += value;
+            //    break;
+            case "Rules Search":
                 searchStat1 += value;
                 break;
-            case "Category 2 Search":
+            case "Openness Search":
                 searchStat2 += value;
                 break;
-            case "Category 3 Search":
+            case "Experience Search":
                 searchStat3 += value;
                 break;
-            case "Category 4 Search":
+            case "Creativity Search":
                 searchStat4 += value;
                 break;
-            case "Category 5 Search":
-                searchStat5 += value;
+            //case "Category 5 Search":
+            //    searchStat5 += value;
+            //    break;
+            case "Rules Preference":
+                prefValue1 = value;
                 break;
-            case "Preference 1":
-                prefValue1 += value;
+            case "Openness Preference":
+                prefValue2 = value;
                 break;
-            case "Preference 2":
-                prefValue2 += value;
+            case "Experience Preference":
+                prefValue3 = value;
                 break;
-            case "Preference 3":
-                prefValue3 += value;
+            case "Creativity Preference":
+                prefValue4 = value;
                 break;
-            case "Preference 4":
-                prefValue4 += value;
-                break;
-            case "Preference 5":
-                prefValue5 += value;
-                break;
+            //case "Preference 5":
+            //    prefValue5 += value;
+            //    break;
         }
     }
 
@@ -293,22 +309,22 @@ public class QuestionsActivity extends AppCompatActivity {
         persStat2 /= QUESTIONS_PER_CATEGORY;
         persStat3 /= QUESTIONS_PER_CATEGORY;
         persStat4 /= QUESTIONS_PER_CATEGORY;
-        persStat5 /= QUESTIONS_PER_CATEGORY;
+        //persStat5 /= QUESTIONS_PER_CATEGORY;
 
         searchStat1 /= QUESTIONS_PER_CATEGORY;
         searchStat2 /= QUESTIONS_PER_CATEGORY;
         searchStat3 /= QUESTIONS_PER_CATEGORY;
         searchStat4 /= QUESTIONS_PER_CATEGORY;
-        searchStat5 /= QUESTIONS_PER_CATEGORY;
+        //searchStat5 /= QUESTIONS_PER_CATEGORY;
 
-        prefValue1 /= QUESTIONS_PER_CATEGORY;
-        prefValue2 /= QUESTIONS_PER_CATEGORY;
-        prefValue3 /= QUESTIONS_PER_CATEGORY;
-        prefValue4 /= QUESTIONS_PER_CATEGORY;
-        prefValue5 /= QUESTIONS_PER_CATEGORY;
+        //prefValue1 /= QUESTIONS_PER_CATEGORY;
+        //prefValue2 /= QUESTIONS_PER_CATEGORY;
+        //prefValue3 /= QUESTIONS_PER_CATEGORY;
+        //prefValue4 /= QUESTIONS_PER_CATEGORY;
+        //prefValue5 /= QUESTIONS_PER_CATEGORY;
 
         //find preference category (highest value)
-        double[] tempPref = {prefValue1, prefValue2, prefValue3, prefValue4, prefValue5};
+        double[] tempPref = {prefValue1, prefValue2, prefValue3, prefValue4};
         double max = tempPref[0];
         for (int i = 1; i < tempPref.length; i++) {
             if (tempPref[i] >= max) {
@@ -317,20 +333,20 @@ public class QuestionsActivity extends AppCompatActivity {
         }
 
         if (max == prefValue1) {
-            pref = "Category 1";
+            pref = "Rules";
         }
         else if (max == prefValue2) {
-            pref = "Category 2";
+            pref = "Openness";
         }
         else if (max == prefValue3) {
-            pref = "Category 3";
+            pref = "Experience";
         }
         else if (max == prefValue4) {
-            pref = "Category 4";
+            pref = "Creativity";
         }
-        else if (max == prefValue5) {
-            pref = "Category 5";
-        }
+        //else if (max == prefValue5) {
+        //    pref = "Category 5";
+        //}
 
 
         //get user's stats
@@ -353,13 +369,13 @@ public class QuestionsActivity extends AppCompatActivity {
                 stats.setPStat2(persStat2);
                 stats.setPStat3(persStat3);
                 stats.setPStat4(persStat4);
-                stats.setPStat5(persStat5);
+                //stats.setPStat5(persStat5);
 
                 stats.setSStat1(searchStat1);
                 stats.setSStat2(searchStat2);
                 stats.setSStat3(searchStat3);
                 stats.setSStat4(searchStat4);
-                stats.setSStat5(searchStat5);
+                //stats.setSStat5(searchStat5);
 
                 stats.setPreference(pref);
 
@@ -388,15 +404,22 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 // this method is called when the animation first starts
-                tvQuestion.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
                 // this method is called when the animation is finished playing
-                tvQuestion.startAnimation(rightInAnim);
 
-                tvQuestion.setVisibility(View.VISIBLE);
+                if(tvQuestion.getVisibility() == View.INVISIBLE) {
+                    tvQuestion2.setVisibility(View.INVISIBLE);
+                    tvQuestion.setVisibility(View.VISIBLE);
+                    tvQuestion.startAnimation(rightInAnim);
+                }
+                else if(tvQuestion2.getVisibility() == View.INVISIBLE) {
+                    tvQuestion.setVisibility(View.INVISIBLE);
+                    tvQuestion2.setVisibility(View.VISIBLE);
+                    tvQuestion2.startAnimation(rightInAnim);
+                }
             }
 
             @Override

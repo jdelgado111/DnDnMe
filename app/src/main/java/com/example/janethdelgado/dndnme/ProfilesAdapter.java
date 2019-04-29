@@ -1,12 +1,14 @@
 package com.example.janethdelgado.dndnme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -46,6 +48,7 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ViewHo
         private ImageView ivShortImage;
         private TextView tvShortUsername;
         private TextView tvShortBio;
+        private RelativeLayout container_profile;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,9 +56,10 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ViewHo
             ivShortImage = itemView.findViewById(R.id.ivShortImage);
             tvShortUsername = itemView.findViewById(R.id.tvShortUsername);
             tvShortBio = itemView.findViewById(R.id.tvShortBio);
+            container_profile = itemView.findViewById(R.id.container_profile);
         }
 
-        public void bind (Profile profile) {
+        public void bind (final Profile profile) {
             ParseFile shortImage = profile.getProfileImage();
             if(shortImage != null) {
                 Glide.with(context).load(shortImage.getUrl()).into(ivShortImage);
@@ -72,6 +76,17 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ViewHo
                 tvShortBio.setText(shortBio);
             else
                 tvShortBio.setText("This is the default text for the short bio.");
+
+            //add click listener on the whole row
+            container_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //navigate to selected profile
+                    Intent i = new Intent(context, ProfileActivity.class);
+                    i.putExtra("user", profile.getUser());
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }

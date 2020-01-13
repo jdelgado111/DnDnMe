@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.janethdelgado.dndnme.Models.Profile;
 import com.parse.ParseFile;
 
 import java.util.List;

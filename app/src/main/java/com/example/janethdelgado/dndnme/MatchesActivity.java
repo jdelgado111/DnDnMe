@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.janethdelgado.dndnme.Models.Profile;
+import com.example.janethdelgado.dndnme.Models.Stats;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -55,11 +57,9 @@ public class MatchesActivity extends AppCompatActivity {
         adapter = new ProfilesAdapter(this, mProfiles);
 
         //set the adapter on the recycler view
-        //adapter tells the recycler view how to show the contents from the view
         rvProfiles.setAdapter(adapter);
 
         //set the layout manager on the recycler view
-        //the layout manager is how you lay out the contents onto the screen
         rvProfiles.setLayoutManager(new LinearLayoutManager(this));
 
         //determine what to match user with (preference)
@@ -73,20 +73,16 @@ public class MatchesActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_profile:
-                        //Toast.makeText(MatchesActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         Intent a = new Intent(MatchesActivity.this, ProfileActivity.class);
                         startActivity(a);
                         break;
                     case R.id.action_matches:
-                        //Toast.makeText(MatchesActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_question:
-                        //Toast.makeText(MatchesActivity.this, "Questions", Toast.LENGTH_SHORT).show();
                         Intent b = new Intent(MatchesActivity.this, QuestionsActivity.class);
                         startActivity(b);
                         break;
                     case R.id.action_logout:
-                        //Toast.makeText(MatchesActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                         Intent c = new Intent(MatchesActivity.this, LogoutActivity.class);
                         startActivity(c);
                         break;
@@ -145,11 +141,6 @@ public class MatchesActivity extends AppCompatActivity {
                         maxRange = statsCheck + 1;
                         minRange = statsCheck - 1;
                         break;
-                    //case "Category 5":
-                    //    statsCheck = stats.getSStat5();
-                    //    maxRange = statsCheck + 1;
-                    //    minRange = statsCheck - 1;
-                    //    break;
                 }
 
                 //find stats that match
@@ -187,11 +178,6 @@ public class MatchesActivity extends AppCompatActivity {
                 statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT4, minRange);
                 statsQuery.addDescendingOrder(Stats.KEY_PSTAT4);
                 break;
-            //case "Category 5":
-            //    statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT5, maxRange);
-            //    statsQuery.whereGreaterThanOrEqualTo(Stats.KEY_PSTAT5, minRange);
-            //    statsQuery.addDescendingOrder(Stats.KEY_PSTAT5);
-            //    break;
         }
 
         statsQuery.findInBackground(new FindCallback<Stats>() {

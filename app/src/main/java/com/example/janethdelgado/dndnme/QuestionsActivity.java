@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.janethdelgado.dndnme.Models.Profile;
+import com.example.janethdelgado.dndnme.Models.Questions;
+import com.example.janethdelgado.dndnme.Models.Stats;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -34,7 +37,6 @@ public class QuestionsActivity extends AppCompatActivity {
     private TextView tvNeutral;
     private TextView tvAgree;
     private RadioGroup rgButtons;
-    //private RadioButton rBtn;
     private Button btnSubmit;
 
     private BottomNavigationView bottomNavigationView;
@@ -43,19 +45,16 @@ public class QuestionsActivity extends AppCompatActivity {
     private double persStat2;
     private double persStat3;
     private double persStat4;
-    //private double persStat5;
 
     private double searchStat1;
     private double searchStat2;
     private double searchStat3;
     private double searchStat4;
-    //private double searchStat5;
 
     private double prefValue1;
     private double prefValue2;
     private double prefValue3;
     private double prefValue4;
-    //private double prefValue5;
 
     private String pref;
 
@@ -267,9 +266,6 @@ public class QuestionsActivity extends AppCompatActivity {
             case "Creativity Personal":
                 persStat4 += value;
                 break;
-            //case "Category 5 Personal":
-            //    persStat5 += value;
-            //    break;
             case "Rules Search":
                 searchStat1 += value;
                 break;
@@ -282,9 +278,6 @@ public class QuestionsActivity extends AppCompatActivity {
             case "Creativity Search":
                 searchStat4 += value;
                 break;
-            //case "Category 5 Search":
-            //    searchStat5 += value;
-            //    break;
             case "Rules Preference":
                 prefValue1 = value;
                 break;
@@ -297,9 +290,6 @@ public class QuestionsActivity extends AppCompatActivity {
             case "Creativity Preference":
                 prefValue4 = value;
                 break;
-            //case "Preference 5":
-            //    prefValue5 += value;
-            //    break;
         }
     }
 
@@ -309,19 +299,11 @@ public class QuestionsActivity extends AppCompatActivity {
         persStat2 /= QUESTIONS_PER_CATEGORY;
         persStat3 /= QUESTIONS_PER_CATEGORY;
         persStat4 /= QUESTIONS_PER_CATEGORY;
-        //persStat5 /= QUESTIONS_PER_CATEGORY;
 
         searchStat1 /= QUESTIONS_PER_CATEGORY;
         searchStat2 /= QUESTIONS_PER_CATEGORY;
         searchStat3 /= QUESTIONS_PER_CATEGORY;
         searchStat4 /= QUESTIONS_PER_CATEGORY;
-        //searchStat5 /= QUESTIONS_PER_CATEGORY;
-
-        //prefValue1 /= QUESTIONS_PER_CATEGORY;
-        //prefValue2 /= QUESTIONS_PER_CATEGORY;
-        //prefValue3 /= QUESTIONS_PER_CATEGORY;
-        //prefValue4 /= QUESTIONS_PER_CATEGORY;
-        //prefValue5 /= QUESTIONS_PER_CATEGORY;
 
         //find preference category (highest value)
         double[] tempPref = {prefValue1, prefValue2, prefValue3, prefValue4};
@@ -344,10 +326,6 @@ public class QuestionsActivity extends AppCompatActivity {
         else if (max == prefValue4) {
             pref = "Creativity";
         }
-        //else if (max == prefValue5) {
-        //    pref = "Category 5";
-        //}
-
 
         //get user's stats
         ParseQuery<Stats> query = ParseQuery.getQuery(Stats.class);
@@ -369,13 +347,11 @@ public class QuestionsActivity extends AppCompatActivity {
                 stats.setPStat2(persStat2);
                 stats.setPStat3(persStat3);
                 stats.setPStat4(persStat4);
-                //stats.setPStat5(persStat5);
 
                 stats.setSStat1(searchStat1);
                 stats.setSStat2(searchStat2);
                 stats.setSStat3(searchStat3);
                 stats.setSStat4(searchStat4);
-                //stats.setSStat5(searchStat5);
 
                 stats.setPreference(pref);
 

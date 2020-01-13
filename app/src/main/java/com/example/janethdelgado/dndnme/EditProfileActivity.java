@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.janethdelgado.dndnme.Models.Profile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -40,8 +41,6 @@ public class EditProfileActivity extends AppCompatActivity {
     //private File imageFile;
     private Profile userProfile;
     private ParseUser user = ParseUser.getCurrentUser();
-    //private Uri photoUri;
-    //private Bitmap imageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

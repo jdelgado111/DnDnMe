@@ -39,22 +39,18 @@ public class LogoutActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_profile:
-                        //Toast.makeText(LogoutActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         Intent a = new Intent(LogoutActivity.this, ProfileActivity.class);
                         startActivity(a);
                         break;
                     case R.id.action_matches:
-                        //Toast.makeText(LogoutActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         Intent b = new Intent(LogoutActivity.this, MatchesActivity.class);
                         startActivity(b);
                         break;
                     case R.id.action_question:
-                        //Toast.makeText(LogoutActivity.this, "Questions", Toast.LENGTH_SHORT).show();
                         Intent c = new Intent(LogoutActivity.this, QuestionsActivity.class);
                         startActivity(c);
                         break;
                     case R.id.action_logout:
-                        //Toast.makeText(LogoutActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;

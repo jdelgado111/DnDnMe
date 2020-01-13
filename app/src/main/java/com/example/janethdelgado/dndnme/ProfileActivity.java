@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.janethdelgado.dndnme.Models.Profile;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -49,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         ParseUser possibleUser = getIntent().getParcelableExtra("user");
 
-        //get user to display
+        //get user to display user data
         if (possibleUser != null){
             user = possibleUser;
         }

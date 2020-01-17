@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +13,9 @@ import android.widget.Button;
 import com.parse.ParseUser;
 
 public class LogoutActivity extends AppCompatActivity {
-    private Button btnLogout;
+    private static final String TAG = "LogoutActivity";
 
+    private Button btnLogout;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -23,10 +25,14 @@ public class LogoutActivity extends AppCompatActivity {
 
         btnLogout = findViewById(R.id.btnLogout);
 
+        //log user out on Parse and navigate to login activity
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
+
+                Log.d(TAG, "User has logged out successfully");
+
                 Intent i = new Intent(LogoutActivity.this, LoginActivity.class);
                 startActivity(i);
             }

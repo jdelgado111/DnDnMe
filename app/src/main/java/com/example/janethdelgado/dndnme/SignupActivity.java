@@ -54,6 +54,7 @@ public class SignupActivity extends AppCompatActivity {
         user.setPassword(password);
         user.setEmail(email);
 
+        //register user
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -69,19 +70,23 @@ public class SignupActivity extends AppCompatActivity {
                 //create default Stats for new User
                 createStats(user);
 
+                Log.d(TAG, "User has signed up successfully");
+
                 // navigate to new activity if the user has signed up properly
                 goMainActivity();
             }
         });
     }
 
-    //create blank profile
+    //create default profile and save to Parse
     private void createProfile(ParseUser parseUser){
         Profile profile = new Profile();
 
         profile.setShortBio("");
         profile.setLongBio("");
         profile.setUser(parseUser);
+
+        //TODO: set default image
 
         profile.saveInBackground(new SaveCallback() {
             @Override
@@ -92,17 +97,18 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d(TAG, "Success!");
+                Log.d(TAG, "Created and saved profile");
             }
         });
     }
 
-    //create default stats
+    //create default stats and save to Parse
     private void createStats(ParseUser parseUser) {
         Stats stats = new Stats();
 
         stats.setUser(parseUser);
 
+        //default values
         stats.setPStat1(1);
         stats.setPStat2(1);
         stats.setPStat3(1);
@@ -113,6 +119,7 @@ public class SignupActivity extends AppCompatActivity {
         stats.setSStat3(1);
         stats.setSStat4(1);
 
+        //default category preference
         stats.setPreference("Rules");
 
         stats.saveInBackground(new SaveCallback() {
@@ -124,11 +131,12 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d(TAG, "Success!");
+                Log.d(TAG, "Created and saved stats");
             }
         });
     }
 
+    //launch the main activity
     private void goMainActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
         startActivity(i);

@@ -64,17 +64,21 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                Log.d(TAG, "User has logged in");
+
                 // navigate to new activity if the user has signed in properly
                 goMainActivity();
             }
         });
     }
 
+    //navigate to signup activity
     private void signUp() {
         Intent i = new Intent(this, SignupActivity.class);
         startActivity(i);
     }
 
+    //navigate to main activity
     private void goMainActivity() {
         Intent i = new Intent(this, ProfileActivity.class);
         startActivity(i);

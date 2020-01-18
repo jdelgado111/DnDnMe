@@ -21,18 +21,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimary"
         android:layout_toRightOf="@id/ivShortImage"
         android:textSize="18sp"
-
         tools:text="Username" />
 
     <TextView
         android:id="@+id/tvShortBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:layout_below="@id/tvShortUsername"
         android:layout_toRightOf="@id/ivShortImage"
         android:textSize="18sp"
-
         tools:text="This is the short bio section of the short profile" />
 </RelativeLayout>

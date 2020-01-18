@@ -6,22 +6,26 @@
         android:id="@+id/action_profile"
         android:icon="@drawable/icon_user"
         android:title="Profile"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorAccent"/>
     <item
         android:id="@+id/action_matches"
         android:icon="@drawable/icon_users"
         android:title="Matches"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorAccent"/>
     <item
         android:id="@+id/action_question"
         android:icon="@drawable/icon_question"
         android:title="Questions"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorAccent"/>
 
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/icon_power"
         android:title="Logout"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/colorAccent"/>
 
 </menu>

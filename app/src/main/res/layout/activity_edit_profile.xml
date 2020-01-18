@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity"
-    android:layout_margin="10dp">
+    android:background="@color/colorPrimary"
+    tools:context=".ProfileActivity">
 
 
     <ImageView
         android:id="@+id/ivProfileImageEdit"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="15dp"
         tools:srcCompat="@tools:sample/avatars" />
@@ -23,35 +24,49 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
         android:layout_toEndOf="@+id/ivProfileImageEdit"
+        android:padding="8dp"
+        android:textSize="18sp"
         android:background="@color/gray"
+        android:textColor="@color/blue"
         tools:text="username" />
 
     <EditText
-        android:id="@+id/etShortBio"
+        android:id="@+id/etShortBioEdit"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="68dp"
         android:layout_below="@+id/tvUsername"
         android:layout_toEndOf="@+id/ivProfileImageEdit"
+        android:layout_marginEnd="10dp"
+        android:textSize="18sp"
+        android:padding="8dp"
         android:background="@color/gray"
+        android:textColor="@color/blue"
         tools:text="This is the short bio section" />
 
     <EditText
-        android:id="@+id/etLongBio"
+        android:id="@+id/etLongBioEdit"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivProfileImageEdit"
         android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="18sp"
+        android:padding="10dp"
         android:background="@color/gray"
+        android:textColor="@color/blue"
         tools:text="The long bio section goes here" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etLongBio"
-        android:layout_alignLeft="@id/etLongBio"
+        android:layout_below="@id/etLongBioEdit"
+        android:layout_alignLeft="@id/etLongBioEdit"
         android:layout_marginTop="20dp"
         android:text="Save" />
 
@@ -59,15 +74,8 @@
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etLongBio"
-        android:layout_alignRight="@id/etLongBio"
+        android:layout_below="@id/etLongBioEdit"
+        android:layout_alignRight="@id/etLongBioEdit"
         android:layout_marginTop="20dp"
         android:text="Cancel" />
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_bottom_navigation" />
 </RelativeLayout>

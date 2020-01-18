@@ -32,8 +32,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ImageView ivProfileImageEdit;
     private TextView tvUsername;
-    private TextView etShortBio;
-    private TextView etLongBio;
+    private TextView etShortBioEdit;
+    private TextView etLongBioEdit;
     private Button btnSave;
     private Button btnCancel;
 
@@ -49,8 +49,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         ivProfileImageEdit = findViewById(R.id.ivProfileImageEdit);
         tvUsername = findViewById(R.id.tvUsername);
-        etShortBio = findViewById(R.id.etShortBio);
-        etLongBio = findViewById(R.id.etLongBio);
+        etShortBioEdit = findViewById(R.id.etShortBioEdit);
+        etLongBioEdit = findViewById(R.id.etLongBioEdit);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
 
@@ -81,8 +81,8 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String shortBio = etShortBio.getText().toString();
-                String longBio = etLongBio.getText().toString();
+                String shortBio = etShortBioEdit.getText().toString();
+                String longBio = etLongBioEdit.getText().toString();
 
                 if (shortBio.matches("") || longBio.matches("")) {
                     Toast.makeText(getApplicationContext(), "Don't leave entries blank! If you don't wish to edit, just click cancel.", Toast.LENGTH_LONG).show();
@@ -180,14 +180,14 @@ public class EditProfileActivity extends AppCompatActivity {
                     tvUsername.setText("@Default");
 
                 if (shortBio != null && !(shortBio.equals("")))
-                    etShortBio.setText(shortBio);
+                    etShortBioEdit.setText(shortBio);
                 else
-                    etShortBio.setText("This is the default text for the short bio.");
+                    etShortBioEdit.setText("This is the default text for the short bio.");
 
                 if (longBio != null && !(longBio.equals("")))
-                    etLongBio.setText(longBio);
+                    etLongBioEdit.setText(longBio);
                 else
-                    etLongBio.setText("This is the default text for the long bio.");
+                    etLongBioEdit.setText("This is the default text for the long bio.");
             }
         });
     }

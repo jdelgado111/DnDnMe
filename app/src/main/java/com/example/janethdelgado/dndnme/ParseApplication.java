@@ -1,6 +1,10 @@
-package com.example.janethdelgado.dndnme.Models;
+package com.example.janethdelgado.dndnme;
 
 import android.app.Application;
+
+import com.example.janethdelgado.dndnme.Models.Profile;
+import com.example.janethdelgado.dndnme.Models.Questions;
+import com.example.janethdelgado.dndnme.Models.Stats;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

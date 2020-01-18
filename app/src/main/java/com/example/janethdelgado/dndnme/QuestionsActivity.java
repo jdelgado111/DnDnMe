@@ -92,20 +92,16 @@ public class QuestionsActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_profile:
-                        //Toast.makeText(QuestionsActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         Intent a = new Intent(QuestionsActivity.this, ProfileActivity.class);
                         startActivity(a);
                         break;
                     case R.id.action_matches:
-                        //Toast.makeText(QuestionsActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         Intent b = new Intent(QuestionsActivity.this, MatchesActivity.class);
                         startActivity(b);
                         break;
                     case R.id.action_question:
-                        //Toast.makeText(QuestionsActivity.this, "Questions", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_logout:
-                        //Toast.makeText(QuestionsActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                         Intent c = new Intent(QuestionsActivity.this, LogoutActivity.class);
                         startActivity(c);
                         break;

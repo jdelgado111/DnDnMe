@@ -22,6 +22,7 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+//Profile Activity acts as default Main Activity
 public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "ProfileActivity";
@@ -48,9 +49,10 @@ public class ProfileActivity extends AppCompatActivity {
         tvLongBio = findViewById(R.id.tvLongBio);
         btnEdit = findViewById(R.id.btnEdit);
 
+        //retrieves user when returning from the edit profile activity
         ParseUser possibleUser = getIntent().getParcelableExtra("user");
 
-        //get user to display user data
+        //user arrived here either from the edit profile activity or the login activity
         if (possibleUser != null){
             user = possibleUser;
         }
@@ -58,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
             user = ParseUser.getCurrentUser();
         }
 
+        //hide the edit button if the profile is being viewed by anyone other than the profile's user
         if(user == ParseUser.getCurrentUser()) {
             btnEdit.setVisibility(View.VISIBLE);
         }
@@ -76,20 +79,16 @@ public class ProfileActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_profile:
-                        //Toast.makeText(ProfileActivity.this, "Profile", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_matches:
-                        //Toast.makeText(ProfileActivity.this, "Matches", Toast.LENGTH_SHORT).show();
                         Intent a = new Intent(ProfileActivity.this, MatchesActivity.class);
                         startActivity(a);
                         break;
                     case R.id.action_question:
-                        //Toast.makeText(ProfileActivity.this, "Questions", Toast.LENGTH_SHORT).show();
                         Intent b = new Intent(ProfileActivity.this, QuestionsActivity.class);
                         startActivity(b);
                         break;
                     case R.id.action_logout:
-                        //Toast.makeText(ProfileActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                         Intent c = new Intent(ProfileActivity.this, LogoutActivity.class);
                         startActivity(c);
                         break;
@@ -102,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_profile);
 
 
-        //listener on edit button
+        //navigate to edit profile activity
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,12 +115,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100 && resultCode == RESULT_OK) { // this 100 needs to match the 100 we used when we called startActivityForResult
             recreate();
-            Log.d(TAG, "returned to ProfileActivity");
+            Log.d(TAG, "Returned to ProfileActivity");
         }
     }
 
     private void fillProfile(final ParseUser user) {
-        Log.d(TAG, "in getProfile");
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
         query.whereEqualTo(Profile.KEY_USER, user);
@@ -162,5 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
                     tvLongBio.setText("This is the default text for the long bio.");
             }
         });
+
+        Log.d(TAG, "Profile data filled successfully");
     }
 }

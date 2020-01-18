@@ -1,10 +1,11 @@
 package com.example.janethdelgado.dndnme;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,12 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -37,8 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button btnSave;
     private Button btnCancel;
 
-    private String filepath;
-    //private File imageFile;
+    private String photoPath;
     private Profile userProfile;
     private ParseUser user = ParseUser.getCurrentUser();
 
@@ -89,9 +95,19 @@ public class EditProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Log.d(TAG, "Filepath: " + filepath);
+                //Log.d(TAG, "Photopath: " + photoPath);
 
-                editProfile(user, shortBio, longBio);
+                ParseFile file;
+
+                if (photoPath != null) {
+                    byte[] image = photoPath.getBytes();
+                    file = new ParseFile("picturePath.png", image);
+                }
+                else {
+                    file = userProfile.getProfileImage();
+                }
+
+                editProfile(user, shortBio, longBio, file);
 
                 Intent i = new Intent(); // create a new Intent to put our data
                 setResult(RESULT_OK, i); // set result code and bundle data for response
@@ -109,30 +125,8 @@ public class EditProfileActivity extends AppCompatActivity {
             // preview the photo (based on Uri)
             Glide.with(EditProfileActivity.this).load(photoUri).into(ivProfileImageEdit);
 
-            //filepath = getPhotoFilepath(photoUri);
+            photoPath = getPhotoFilepath(photoUri);
         }
-    }
-
-    /*
-    // Returns the File for a photo stored on disk given the Uri
-    private File getPhotoFile(Uri photoUri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(photoUri, projection, null, null, null);
-        //int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-        int column_index = cursor.getColumnIndexOrThrow(projection[0]);
-        String imagePath = cursor.getString(column_index);
-        //String filePath = cursor.getString(columnIndex);
-        cursor.close();
-
-        //Bitmap imageBitmap = BitmapFactory.decodeFile(filePath);
-
-        Log.d(TAG, "Image path: " + imagePath);
-
-        File file = new File(imagePath);
-
-        return file;
     }
 
     private String getPhotoFilepath(Uri photoUri) {
@@ -141,15 +135,16 @@ public class EditProfileActivity extends AppCompatActivity {
         //int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
         cursor.moveToFirst();
-        int column_index = cursor.getColumnIndexOrThrow(projection[0]);
+
+        int column_index = cursor.getColumnIndex(projection[0]);
         String filepath = cursor.getString(column_index);
         cursor.close();
+
         return filepath;
     }
-    */
+
 
     private void fillProfile() {
-        //Log.d(TAG, "in getProfile");
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
         query.whereEqualTo(Profile.KEY_USER, user);
@@ -193,7 +188,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
 
-    private void editProfile(final ParseUser user, final String sBio, final String lBio) {
+    private void editProfile(final ParseUser user, final String sBio, final String lBio, final ParseFile file) {
         ParseQuery<Profile> query = ParseQuery.getQuery(Profile.class);
         query.include(Profile.KEY_USER);
         query.whereEqualTo(Profile.KEY_USER, user);
@@ -211,6 +206,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 userProfile.setShortBio(sBio);
                 userProfile.setLongBio(lBio);
 
+                userProfile.setProfileImage(file);
+
                 userProfile.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -220,10 +217,27 @@ public class EditProfileActivity extends AppCompatActivity {
                             return;
                         }
 
-                        Log.d(TAG, "Success!");
+                        Log.d(TAG, "Profile edited successfully");
                     }
                 });
             }
         });
+    }
+
+    private byte[] readInFile(String path) throws IOException {
+
+        byte[] data = null;
+        File newFile = new File(path);
+        InputStream input_stream = new BufferedInputStream(new FileInputStream(newFile));
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        data = new byte[16384]; // 16K
+        int bytes_read;
+
+        while ((bytes_read = input_stream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, bytes_read);
+        }
+
+        input_stream.close();
+        return buffer.toByteArray();
     }
 }

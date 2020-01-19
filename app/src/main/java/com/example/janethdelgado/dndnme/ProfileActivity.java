@@ -1,6 +1,9 @@
 package com.example.janethdelgado.dndnme;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -15,11 +18,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.janethdelgado.dndnme.Models.Profile;
 import com.parse.FindCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 
 //Profile Activity acts as default Main Activity
@@ -141,7 +147,12 @@ public class ProfileActivity extends AppCompatActivity {
 
                 //populate Views
                 if(image != null) {
-                    Glide.with(ProfileActivity.this).load(image.getUrl()).into(ivProfileImage);
+                    try {
+                        Glide.with(ProfileActivity.this).load(Uri.parse(image.getUrl())).disallowHardwareConfig().into(ivProfileImage);
+                    }
+                    catch (Exception exc) {
+                        Log.e(TAG, "No new URL");
+                    }
                 }
 
                 if (username != null && !(username.equals("")))

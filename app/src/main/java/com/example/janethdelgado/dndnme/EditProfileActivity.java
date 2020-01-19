@@ -22,12 +22,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -95,13 +89,12 @@ public class EditProfileActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Log.d(TAG, "Photopath: " + photoPath);
-
                 ParseFile file;
 
                 if (photoPath != null) {
                     byte[] image = photoPath.getBytes();
-                    file = new ParseFile("picturePath.png", image);
+                    file = new ParseFile("pic.png", image);
+                    file.saveInBackground();
                 }
                 else {
                     file = userProfile.getProfileImage();
@@ -222,22 +215,5 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    private byte[] readInFile(String path) throws IOException {
-
-        byte[] data = null;
-        File newFile = new File(path);
-        InputStream input_stream = new BufferedInputStream(new FileInputStream(newFile));
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        data = new byte[16384]; // 16K
-        int bytes_read;
-
-        while ((bytes_read = input_stream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, bytes_read);
-        }
-
-        input_stream.close();
-        return buffer.toByteArray();
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +65,7 @@ public class ProfilesAdapter extends RecyclerView.Adapter<ProfilesAdapter.ViewHo
         public void bind (final Profile profile) {
             ParseFile shortImage = profile.getProfileImage();
             if(shortImage != null) {
-                Glide.with(context).load(shortImage.getUrl()).into(ivShortImage);
+                Glide.with(context).load(Uri.parse(shortImage.getUrl())).into(ivShortImage);
             }
 
             String username = profile.getUser().getUsername();

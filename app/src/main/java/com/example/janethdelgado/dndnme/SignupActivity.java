@@ -7,10 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.janethdelgado.dndnme.Models.Profile;
 import com.example.janethdelgado.dndnme.Models.Stats;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
@@ -23,6 +28,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText etPassword;
     private EditText etEmail;
     private Button btnSignUp;
+
+    private ParseFile defaultImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class SignupActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e != null) {
                     Log.e(TAG, "Issue with sign up");
+                    Toast.makeText(SignupActivity.this, "Invalid sign up, try again", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                     return;
                 }
@@ -80,13 +88,31 @@ public class SignupActivity extends AppCompatActivity {
 
     //create default profile and save to Parse
     private void createProfile(ParseUser parseUser){
-        Profile profile = new Profile();
+        final Profile profile = new Profile();
 
         profile.setShortBio("");
         profile.setLongBio("");
         profile.setUser(parseUser);
 
-        //TODO: set default image
+        //default image taken from existing default user
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Profile");
+        query.getInBackground("wa6q24VD5V", new GetCallback<ParseObject>() {
+            public void done(ParseObject searchProfile, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Couldn't retrieve default image");
+                    e.printStackTrace();
+                    return;
+                }
+                else {
+                    defaultImage = searchProfile.getParseFile("profileImage");
+
+                    if (defaultImage != null)
+                        profile.setProfileImage(defaultImage);
+                    else
+                        Log.d(TAG, "Default image is null");
+                }
+            }
+        });
 
         profile.saveInBackground(new SaveCallback() {
             @Override

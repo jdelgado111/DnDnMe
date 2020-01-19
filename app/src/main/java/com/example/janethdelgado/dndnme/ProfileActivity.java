@@ -1,8 +1,6 @@
 package com.example.janethdelgado.dndnme;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -18,14 +16,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.janethdelgado.dndnme.Models.Profile;
 import com.parse.FindCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.io.File;
-import java.net.URL;
 import java.util.List;
 
 //Profile Activity acts as default Main Activity
@@ -55,10 +50,9 @@ public class ProfileActivity extends AppCompatActivity {
         tvLongBio = findViewById(R.id.tvLongBio);
         btnEdit = findViewById(R.id.btnEdit);
 
-        //retrieves user when returning from the edit profile activity
+        //check if current user is owner of this profile
         ParseUser possibleUser = getIntent().getParcelableExtra("user");
 
-        //user arrived here either from the edit profile activity or the login activity
         if (possibleUser != null){
             user = possibleUser;
         }
@@ -66,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
             user = ParseUser.getCurrentUser();
         }
 
-        //hide the edit button if the profile is being viewed by anyone other than the profile's user
+        //hide the edit button if the profile is being viewed by anyone other than this profile's user
         if(user == ParseUser.getCurrentUser()) {
             btnEdit.setVisibility(View.VISIBLE);
         }
@@ -147,12 +141,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                 //populate Views
                 if(image != null) {
-                    try {
-                        Glide.with(ProfileActivity.this).load(Uri.parse(image.getUrl())).disallowHardwareConfig().into(ivProfileImage);
-                    }
-                    catch (Exception exc) {
-                        Log.e(TAG, "No new URL");
-                    }
+                    Glide.with(ProfileActivity.this).load(Uri.parse(image.getUrl())).into(ivProfileImage);
                 }
 
                 if (username != null && !(username.equals("")))

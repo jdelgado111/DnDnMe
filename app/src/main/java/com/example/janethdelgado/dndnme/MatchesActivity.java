@@ -23,22 +23,19 @@ import java.util.List;
 public class MatchesActivity extends AppCompatActivity {
 
     private final String TAG = "MatchesActivity";
+    private final int WIDEN_RANGE = 5;
 
     private RecyclerView rvProfiles;
     private ProfilesAdapter adapter;
     private List<Profile> mProfiles;
-    //private List<Profile> tempProfiles;
 
     private BottomNavigationView bottomNavigationView;
 
-    //private ParseUser user = ParseUser.getCurrentUser();
     private Stats stats;
     private String preference;
     private double maxRange;
     private double minRange;
     private double statsCheck;
-
-    //private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +47,6 @@ public class MatchesActivity extends AppCompatActivity {
         //create the data source
         mProfiles = new ArrayList<>();
 
-        //create temp data source
-        //tempProfiles = new ArrayList<>();
-
         //create the adapter
         adapter = new ProfilesAdapter(this, mProfiles);
 
@@ -63,7 +57,6 @@ public class MatchesActivity extends AppCompatActivity {
         rvProfiles.setLayoutManager(new LinearLayoutManager(this));
 
         //determine what to match user with (preference)
-        Log.d(TAG, "Calling selectMatches");
         selectMatches();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -96,12 +89,8 @@ public class MatchesActivity extends AppCompatActivity {
     }
 
     private void selectMatches() {
-        Log.d(TAG, "Inside selectMatches");
-
-        //get stats of user
-        //ParseQuery<Stats> statQuery = new ParseQuery<Stats>(Stats.class);
+        //get user's stats
         ParseQuery<Stats> statQuery = ParseQuery.getQuery(Stats.class);
-        //statQuery.getInBackground(ParseUser.getCurrentUser().getObjectId(), new GetCallback<Stats>() {
         statQuery.include(Stats.KEY_USER);
         statQuery.whereEqualTo(Stats.KEY_USER, ParseUser.getCurrentUser());
         statQuery.findInBackground(new FindCallback<Stats>() {
@@ -118,45 +107,37 @@ public class MatchesActivity extends AppCompatActivity {
                 //get user's preference (category)
                 preference = stats.getPreference();
 
-                Log.d(TAG, "In selectMatches - Preference: " + preference);
-
                 switch (preference) {
                     case "Rules":
                         statsCheck = stats.getSStat1();
-                        maxRange = statsCheck + 1;
-                        minRange = statsCheck - 1;
                         break;
                     case "Openness":
                         statsCheck = stats.getSStat2();
-                        maxRange = statsCheck + 1;
-                        minRange = statsCheck - 1;
                         break;
                     case "Experience":
                         statsCheck = stats.getSStat3();
-                        maxRange = statsCheck + 1;
-                        minRange = statsCheck - 1;
                         break;
                     case "Creativity":
                         statsCheck = stats.getSStat4();
-                        maxRange = statsCheck + 1;
-                        minRange = statsCheck - 1;
                         break;
+                    default:
+                        statsCheck = stats.getSStat1();
                 }
 
+                //set range to search within
+                maxRange = statsCheck + 1;
+                minRange = statsCheck - 1;
+
                 //find stats that match
-                Log.d(TAG, "Calling findMatches");
                 findMatches(preference);
             }
         });
     }
 
     private void findMatches(final String prefer) {
-        Log.d(TAG, "Inside findMatches");
-
-        //String pref = prefer;
-
         ParseQuery<Stats> statsQuery = ParseQuery.getQuery(Stats.class);
-        Log.d(TAG, "In findMatches - Preference: " + prefer);
+
+        //set query parameters
         switch (prefer) {
             case "Rules":
                 statsQuery.whereLessThanOrEqualTo(Stats.KEY_PSTAT1, maxRange);
@@ -189,14 +170,15 @@ public class MatchesActivity extends AppCompatActivity {
                     return;
                 }
 
+                //if no matches, widen range and search again
                 if(returnedStats.size() == 0) {
-                    minRange -= 6;
-                    maxRange +=6;
+                    minRange -= WIDEN_RANGE;
+                    maxRange += WIDEN_RANGE;
                     Log.d(TAG, "Searching again - Preference: " + prefer);
                     findMatches(prefer);
                 }
 
-                //get profiles tied to matching stats
+                //get profiles tied to matching stats to display them
                 getProfiles(returnedStats);
             }
         });
@@ -204,19 +186,16 @@ public class MatchesActivity extends AppCompatActivity {
 
     private void getProfiles(List<Stats> statsList) {
         ParseQuery<Profile> profileQuery = ParseQuery.getQuery(Profile.class);
-        Stats stat;
 
         for (int i = 0; i < statsList.size(); i++) {
-            //position = i;
-            stat = statsList.get(i);
+            Stats stat = statsList.get(i);
             ParseUser statUser = stat.getUser();
 
             String myId = stat.getUser().getObjectId();
 
+            //don't match current user to themselves
             if (myId.equals(ParseUser.getCurrentUser().getObjectId()))
                 continue;
-
-            Log.d(TAG, "myID: " + myId);
 
             profileQuery.include(Profile.KEY_USER);
             profileQuery.whereEqualTo(Profile.KEY_USER, statUser);
@@ -228,8 +207,6 @@ public class MatchesActivity extends AppCompatActivity {
                         e.printStackTrace();
                         return;
                     }
-
-                    //Log.d(TAG, "mProfiles size: " + mProfiles.size() + " Count: " + position);
 
                     mProfiles.add(profiles.get(0));
                     adapter.notifyDataSetChanged();

@@ -62,8 +62,6 @@ public class QuestionsActivity extends AppCompatActivity {
     private Stats stats;
     private Questions q;
 
-    //private List<Questions> questions;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +79,6 @@ public class QuestionsActivity extends AppCompatActivity {
         tvQuestion2.setVisibility(View.INVISIBLE);
 
         //get list of questions
-        //questions = new ArrayList<>();
         queryQuestions();
 
         //bottom navigation
@@ -115,8 +112,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void queryQuestions() {
-        ParseQuery<Questions> questionQuery = new ParseQuery<Questions>(Questions.class);
-        //questionQuery.include(Profile.KEY_USER);
+        ParseQuery<Questions> questionQuery = new ParseQuery<>(Questions.class);
         questionQuery.findInBackground(new FindCallback<Questions>() {
             @Override
             public void done(List<Questions> questions, ParseException e) {
@@ -126,8 +122,6 @@ public class QuestionsActivity extends AppCompatActivity {
                     return;
                 }
 
-                //questions.addAll(qs);
-
                 //get first question randomly
                 int random = getRandomNumber(0, questions.size() - 1);
                 q = questions.get(random);
@@ -136,18 +130,11 @@ public class QuestionsActivity extends AppCompatActivity {
                 //display first question
                 tvQuestion.setText(question);
 
-                //remove first question from list
+                //remove first question from list to avoid repeating
                 questions.remove(random);
 
-
-                //handle clicks
+                //handle clicks on submit button to go to next question
                 buttonListener(questions);
-
-                /*//log for debugging purposes
-                for (int i = 0; i < questions.size(); i++) {
-                    Questions ques = questions.get(i);
-                    Log.d(TAG, "Question: " + ques.getQuestion());
-                }*/
             }
         });
     }
@@ -156,47 +143,17 @@ public class QuestionsActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //set question change animation
                 animation();
 
                 // get selected radio button from radioGroup
                 int selectedId = rgButtons.getCheckedRadioButtonId();
 
-                //update stats of question
+                //update stats with answer
                 addStats(q, selectedId);
 
-
-                //set next question
-                int i = getRandomNumber(0, questions.size());
-                if (i < questions.size()) {
-                    q = questions.get(i);
-                    String ques = q.getQuestion();
-
-                    if(tvQuestion.getVisibility() == View.VISIBLE) {
-                        tvQuestion2.setText(ques);
-                    }
-                    else if(tvQuestion2.getVisibility() == View.VISIBLE) {
-                        tvQuestion.setText(ques);
-                    }
-
-                    //remove used question from list
-                    questions.remove(i);
-                }
-                else if (i == questions.size() && i != 0) {
-                    i = 0;
-                    q = questions.get(i);
-                    String ques = q.getQuestion();
-
-                    if(tvQuestion.getVisibility() == View.VISIBLE) {
-                        tvQuestion2.setText(ques);
-                    }
-                    else if(tvQuestion2.getVisibility() == View.VISIBLE) {
-                        tvQuestion.setText(ques);
-                    }
-
-                    //remove used question from list
-                    questions.remove(i);
-                }
-                else {  //size == 0, all questions complete
+                if (questions.size() == 0) {
+                    //all questions have been displayed, end questionnaire and save stats to DB
                     String end = "Questionnaire Complete!";
                     tvQuestion.setText(end);
 
@@ -206,9 +163,32 @@ public class QuestionsActivity extends AppCompatActivity {
                     tvAgree.setVisibility(View.INVISIBLE);
                     btnSubmit.setVisibility(View.INVISIBLE);
 
-                    //finalize stats (averages, set them) at the end
+                    //finalize stats (averages, save them) at the end
                     finalizeStats();
+                }
+                else {
+                    //set next question randomly
+                    String ques = "";
+                    int i = getRandomNumber(0, questions.size());
 
+                    if (i < questions.size()) {
+                        q = questions.get(i);
+                        ques = q.getQuestion();
+                    }
+                    else if (i == questions.size() && i != 0) {
+                        i = 0;
+                        q = questions.get(i);
+                        ques = q.getQuestion();
+                    }
+
+                    if (tvQuestion.getVisibility() == View.VISIBLE) {
+                        tvQuestion2.setText(ques);
+                    } else if (tvQuestion2.getVisibility() == View.VISIBLE) {
+                        tvQuestion.setText(ques);
+                    }
+
+                    //remove used question from list
+                    questions.remove(i);
                 }
             }
         });
@@ -356,12 +336,12 @@ public class QuestionsActivity extends AppCompatActivity {
                     @Override
                     public void done(ParseException e) {
                         if (e != null) {
-                            Log.e(TAG, "Error while saving");
+                            Log.e(TAG, "Error while saving stats");
                             e.printStackTrace();
                             return;
                         }
 
-                        Log.d(TAG, "Success!");
+                        Log.d(TAG, "Stats saved successfully");
                     }
                 });
             }

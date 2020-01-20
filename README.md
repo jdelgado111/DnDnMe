@@ -19,7 +19,7 @@ Edit Profile                                |  Login                            
 
 User must either login or sign up to use the rest of the app. Once the user is verified, they are taken to their Profile screen. On user signup, the user profile image is blank and their short and long bio sections are filled with default text. The user may click the Edit button to reach the Edit Profile screen, where they can change their profile image, short bio, and long bio. The short bio is displayed to other users on the Matches screen, while the long bio is displayed to other users when they click through to reach the full Profile screen.
 
-The user will only view valid matches on the Matches screen when they have completed the questionnaire on the Questionnaire screen. The questionnaire is 28 questions long, and can be retaken as many times as the user likes. The Logout screen will immediately log the user out when they click the Logout button. The user remains logged in to the app, even across app restarts, unless they manually log out.
+The user will only view valid matches on the Matches screen when they have completed the questionnaire on the Questionnaire screen. The questionnaire is 28 questions long, and can be retaken as many times as the user likes. The questionnaire must be completed in order to update the user's matches. The Logout screen will immediately log the user out when they click the Logout button. The user remains logged in to the app, even across app restarts, unless they manually log out.
 
 For best experience: rather than sign up, users may use the following username and password to login to the app and view the various functions
 
